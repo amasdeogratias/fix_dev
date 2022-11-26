@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'fieldtracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'fixnet_dev',
+        'NAME':'fixnet_dev',
         'USER':'root',
         'PASSWORD':'',
         'HOST':'localhost',

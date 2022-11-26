@@ -9,5 +9,5 @@ from .serializers import LocationSerializer
 @api_view(['GET'])
 def endpoints(request):
     locations = Location.objects.all()
-    serializer = LocationSerializer(locations)
+    serializer = LocationSerializer(locations, many=True)
     return Response(serializer.data)
