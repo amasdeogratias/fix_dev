@@ -8,3 +8,16 @@ class Location(models.Model):
     
     def __str__(self):
         return self.name
+        
+# customer model
+class Customer(models.Model):
+    customer_name = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    mobile = models.CharField(max_length=200, null=True)
+    address = models.CharField(max_length=200, null=True)
+    customer_business = models.CharField(max_length=200, null=True)
+    
+    def __str__(self) -> str:
+        return self.customer_name
+    
+    
