@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Location
-from .serializers import LocationSerializer
+from .models import Location, Customer
+from .serializers import LocationSerializer, CustomerSerializer
 from django.db.models import Q
 
 # Create your views here.
@@ -61,4 +61,10 @@ def location_detail(request,name):
         
     if request.method == 'DELETE':
         locations.delete()
-        return Response('locations deleted successfully')
+        return redirect('locations',permanent=True)
+
+@api_view(['GET'])
+def customer_lists(request):
+    customers = Customer.objects.all()
+    serializer = CustomerSerializer(customers, many=True)
+    return Response(serializer.data)
