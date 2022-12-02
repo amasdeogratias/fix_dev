@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -40,8 +40,25 @@ def location_list(request):
         
     
 # return single location by name
-@api_view(['GET'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def location_detail(request,name):
     locations = Location.objects.get(name=name)
-    serializer = LocationSerializer(locations, many=False)
-    return Response(serializer.data)
+    
+    if request.method == 'GET':
+        serializer = LocationSerializer(locations, many=False)
+        return Response(serializer.data)
+    
+    if request.method == 'PUT':
+        locations.name = request.data['name']
+        locations.latitude = request.data['latitude']
+        locations.longitude = request.data['longitude']
+        
+        locations.save()
+        
+        #serialize data
+        serializer = LocationSerializer(locations, many=False)
+        return Response(serializer.data)
+        
+    if request.method == 'DELETE':
+        locations.delete()
+        return Response('locations deleted successfully')
